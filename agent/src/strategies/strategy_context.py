@@ -20,7 +20,8 @@ class StrategyContext:
         vault_address: str,
         evm_factory_provider: AlchemyFactoryProvider,
         rebalancer_contract: RebalancerContract,
-        flow: Flow
+        flow: Flow,
+        max_allowance: int
     ):
         self.from_chain_id = from_chain_id
         self.to_chain_id = to_chain_id
@@ -31,7 +32,7 @@ class StrategyContext:
         self.config = config
         self.agent_address = agent_address
         self.vault_address = vault_address
-
+        self.max_allowance = max_allowance
         self.evm_factory_provider = evm_factory_provider
         self.rebalancer_contract = rebalancer_contract
         

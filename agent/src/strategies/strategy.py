@@ -12,13 +12,14 @@ class Strategy:
     NAME = "BaseStrategy"
     STEPS: list[type] = []
 
-    def __init__(self, *, rebalancer_contract: RebalancerContract, evm_factory_provider: AlchemyFactoryProvider, vault_address: str, config: Config, remote_config: Dict[str, dict], agent_address: str):
+    def __init__(self, *, rebalancer_contract: RebalancerContract, evm_factory_provider: AlchemyFactoryProvider, vault_address: str, config: Config, remote_config: Dict[str, dict], agent_address: str, max_allowance: int):
         self.rebalancer_contract = rebalancer_contract
         self.evm_factory_provider = evm_factory_provider
         self.vault_address = vault_address
         self.config = config
         self.remote_config = remote_config
         self.agent_address = agent_address
+        self.max_allowance = max_allowance
 
     async def execute(self, *, from_chain_id: int, to_chain_id: int, amount: int, flow: Flow, restart_from: str | None = None):
         ctx = self._make_context(
@@ -41,7 +42,8 @@ class Strategy:
             vault_address=self.vault_address,
             evm_factory_provider=self.evm_factory_provider,
             rebalancer_contract=self.rebalancer_contract,
-            flow=flow
+            flow=flow,
+            max_allowance=self.max_allowance
         )
 
     async def _run_phases(self, ctx: StrategyContext, restart_from: Optional[str] = None):
