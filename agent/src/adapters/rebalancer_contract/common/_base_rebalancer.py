@@ -6,6 +6,7 @@ from near_omni_client.providers.interfaces import IProviderFactory
 from config import Config
 from helpers import GasEstimator
 
+# @dev Note: This is a base class for rebalancer actions only used for static typing purposes.
 class _RebalancerBase:
     near_client: NearClient
     near_wallet: NearWallet
