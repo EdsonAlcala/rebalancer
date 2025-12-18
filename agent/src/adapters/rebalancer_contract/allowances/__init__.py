@@ -1,9 +1,5 @@
-from .approve_aave import ApproveAave
-from .approve_messenger import ApproveMessengerCctp
-from .approve_vault import ApproveVault
+from .rebalancer_approvals import RebalancerApprovals
 
 __all__ = [
-    "ApproveAave",
-    "ApproveMessengerCctp",
-    "ApproveVault",
+    "RebalancerApprovals",
 ]
