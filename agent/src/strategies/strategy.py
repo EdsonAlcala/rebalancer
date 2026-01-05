@@ -54,27 +54,33 @@ class Strategy:
 
     async def _run_phases(self, ctx: StrategyContext, restart_from: Optional[str] = None):
         start_index = 0
+        required_steps = []
 
         # find the step to restart from, if applicable
         if restart_from:
             for i, step_cls in enumerate(self.STEPS):
                 if step_cls.CAN_BE_RESTARTED and step_cls.PAYLOAD_TYPE == restart_from:
                     start_index = i
+                    required_steps = step_cls.REQUIRED_STEPS or []
                     break
 
-        # find common steps to run before main steps
+        # common steps
         for step_cls in self.COMMON_STEPS:
-            step = step_cls()
-            print(f"🌈 Phase: {step.NAME}")
-            if step.SHOULD_BE_RETRIED:
-                await retry_async_step(lambda: step.run(ctx))
-            else:
-                await step.run(ctx)
-                
+            await self._run_step(step_cls(), ctx)
+
+        # required steps of target
+        if restart_from and required_steps:
+            step_map = {cls.NAME: cls for cls in self.STEPS}
+            for step_name in required_steps:
+                await self._run_step(step_map[step_name](), ctx)
+
+        # normal flow
         for step_cls in self.STEPS[start_index:]:
-            step = step_cls()
-            print(f"🌈 Phase: {step.NAME}")
-            if step.SHOULD_BE_RETRIED:
-                await retry_async_step(lambda: step.run(ctx))
-            else:
-                await step.run(ctx)
+            await self._run_step(step_cls(), ctx)
+
+    async def _run_step(self, step, ctx):
+        print(f"🌈 Phase: {step.NAME.value}")
+        if step.SHOULD_BE_RETRIED:
+            await retry_async_step(lambda: step.run(ctx))
+        else:
+            await step.run(ctx)

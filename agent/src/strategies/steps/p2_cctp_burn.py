@@ -12,7 +12,9 @@ class CctpBurn(Step):
 
     CAN_BE_RESTARTED = True
     
-    REQUIRED_STEPS: list[str] = ["ComputeCctpFees"]
+    REQUIRED_STEPS: list[StepName] = [
+        StepName.ComputeCctpFees
+    ]
 
     async def run(self, ctx: StrategyContext):
         burn_token = ctx.usdc_token_address_on_source_chain

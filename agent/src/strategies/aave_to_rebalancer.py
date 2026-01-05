@@ -9,8 +9,8 @@ from .steps.p2_compute_cctp_fees import ComputeCctpFees
 from .steps.p2_cctp_burn import CctpBurn
 from .steps.p2_cctp_burn_after_assertion import CctpBurnAfterAssertion
 from .steps.p3_wait_attestation import WaitAttestation
-from .steps.p4_cctp_mint import CttpMint
-from .steps.p4_cctp_mint_after_assertion import CttpMintAfterAssertion
+from .steps.p4_cctp_mint import CctpMint
+from .steps.p4_cctp_mint_after_assertion import CctpMintAfterAssertion
 from .steps.p6_complete_rebalance import CompleteRebalance
 from .steps.p6_withdraw_from_aave import WithdrawFromAave
 from .steps.p6_withdraw_from_aave_after_assertion import WithdrawFromAaveAfterAssertion
@@ -33,8 +33,8 @@ class AaveToRebalancer(Strategy):
         CctpBurn,
         CctpBurnAfterAssertion,
         WaitAttestation,
-        CttpMint,
-        CttpMintAfterAssertion,
+        CctpMint,
+        CctpMintAfterAssertion,
         GetUSDCBalanceBeforeDepositToRebalancer,
         DepositIntoRebalancer,
         DepositIntoRebalancerAfterAssertion,
