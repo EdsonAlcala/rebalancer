@@ -3,15 +3,32 @@ import base64
 
 from typing import Any, Dict
 
+from near_omni_client.json_rpc.client import NearClient
+from near_omni_client.wallets.near_wallet import NearWallet
 from near_omni_client.transactions import TransactionBuilder, ActionFactory
 from near_omni_client.transactions.utils import decode_key
 from near_omni_client.json_rpc.exceptions import JsonRpcError
+from near_omni_client.providers.interfaces import IProviderFactory
+
+from config import Config
+from helpers import GasEstimator
+from utils import address_to_bytes32
 
 from .views import RebalancerContractViews
 from .allowances import RebalancerApprovals
 from .state_machine_actions import RebalancerStepMachineActions
 
 class RebalancerContract(RebalancerContractViews, RebalancerApprovals,RebalancerStepMachineActions):
+   def __init__(self, near_client: NearClient, near_wallet: NearWallet, near_contract_id: str, agent_address: str, gas_estimator: GasEstimator, evm_provider: IProviderFactory, config: Config) -> None:
+        self.near_client = near_client
+        self.near_contract_id = near_contract_id
+        self.near_wallet = near_wallet
+        self.agent_address = agent_address
+        self.gas_estimator = gas_estimator
+        self.evm_provider = evm_provider
+        self.config = config
+        self.agent_address_as_bytes32 = address_to_bytes32(self.agent_address)
+   
    async def _sign_and_submit_transaction(self, *, method: str, args: Dict[str, Any], gas: int, deposit: int, max_retries: int = 3, delay: float = 2.0):
       public_key_str = await self.near_wallet.get_public_key()
       signer_account_id = self.near_wallet.get_address()
