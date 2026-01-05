@@ -1,11 +1,12 @@
-from enum import IntEnum
+from enum import Enum
 
 
-class TxType(IntEnum):
-    AaveWithdraw                  = 1
-    CCTPBurn                      = 2
-    CCTPMint                      = 3
-    AaveSupply                    = 4
-    RebalancerWithdrawToAllocate = 5
-    RebalancerDeposit            = 6
-
+class TxType(Enum):
+    AaveSupply                        = "AaveSupply"
+    AaveWithdraw                      = "AaveWithdraw"
+    CCTPBurn                          = "CCTPBurn"
+    CCTPMint                          = "CCTPMint"
+    RebalancerWithdrawToAllocate      = "RebalancerWithdrawToAllocate"
+    RebalancerUpdateCrossChainBalance = "RebalancerUpdateCrossChainBalance"
+    RebalancerDeposit                 = "RebalancerDeposit"
+    RebalancerSignCrossChainBalance   = "RebalancerSignCrossChainBalance"
