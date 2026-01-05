@@ -43,10 +43,11 @@ async def main():
         from_chain_id = activity_log["source_chain"]
         to_chain_id = activity_log["destination_chain"]
         amount = activity_log["amount"]
+        usdc_agent_balance_before_rebalance = activity_log["usdc_agent_balance_before"]
         
         print(f"Resuming from flow: {flow}, from_chain_id: {from_chain_id}, to_chain_id: {to_chain_id}, amount: {amount}, restart_from: {restart_from}")
         
-        await StrategyManager.get_strategy(flow).execute(from_chain_id=from_chain_id, to_chain_id=to_chain_id, amount=amount, flow=flow, restart_from=restart_from)
+        await StrategyManager.get_strategy(flow).execute(from_chain_id=from_chain_id, to_chain_id=to_chain_id, amount=amount, flow=flow, restart_from=restart_from, usdc_agent_balance_before_rebalance=usdc_agent_balance_before_rebalance)
 
         print("✅ Rebalance operations computed successfully.")
 
