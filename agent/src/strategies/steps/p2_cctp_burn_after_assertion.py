@@ -1,9 +1,10 @@
 from helpers import Assert
 from ..strategy_context import StrategyContext
 from .step import Step
+from .step_names import StepName
 
 class CctpBurnAfterAssertion(Step):
-    NAME = "CctpBurnAfterAssertion"
+    NAME = StepName.CctpBurnAfterAssertion
 
     async def run(self, ctx: StrategyContext):
         # Step 4: Assert balance is (balance before - fees)
