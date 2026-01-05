@@ -2,9 +2,10 @@ from helpers import broadcast
 from adapters import USDC
 from ..strategy_context import StrategyContext
 from .step import Step
+from .step_names import StepName
 
 class ApproveBeforeCctpBurnIfRequired(Step):
-    NAME = "ApproveBeforeCctpBurnIfRequired"
+    NAME = StepName.ApproveBeforeCctpBurnIfRequired
 
     async def run(self, ctx: StrategyContext):
         # @dev since this action can only happen in the source chain, we use the messenger address there

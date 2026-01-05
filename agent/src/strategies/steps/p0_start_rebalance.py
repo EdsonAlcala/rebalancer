@@ -1,11 +1,14 @@
 from engine_types import Flow
 from ..strategy_context import StrategyContext
 from .step import Step
+from .step_names import StepName
 
 
 class StartRebalance(Step):
-    NAME = "StartRebalance"
+    NAME = StepName.StartRebalance
+
     CAN_BE_RESTARTED = False
+    
     async def run(self, ctx: StrategyContext) -> None:
         print("🚀 Starting rebalance...")
         if ctx.usdc_agent_balance_before_rebalance is None:

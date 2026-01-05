@@ -2,10 +2,10 @@ from helpers import broadcast
 from adapters import USDC
 from ..strategy_context import StrategyContext
 from .step import Step
-
+from .step_names import StepName
 
 class ApproveAaveUSDCBeforeSupplyIfRequired(Step):
-    NAME = "ApproveAaveUSDCBeforeSupplyIfRequired"
+    NAME = StepName.ApproveAaveUSDCBeforeSupplyIfRequired
 
     async def run(self, ctx: StrategyContext) -> None:
         # @dev since this action can only happen directly in the destination chain, we use the lending pool address there.

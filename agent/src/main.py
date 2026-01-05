@@ -45,6 +45,10 @@ async def main():
         amount = activity_log["amount"]
         usdc_agent_balance_before_rebalance = activity_log["usdc_agent_balance_before"]
         
+        # if there is an existing session but the previous step is None, we set the restart_from to pending_step
+        if restart_from is None:
+            restart_from = existing_session["pending_step"]
+
         print(f"Resuming from flow: {flow}, from_chain_id: {from_chain_id}, to_chain_id: {to_chain_id}, amount: {amount}, restart_from: {restart_from}")
         
         await StrategyManager.get_strategy(flow).execute(from_chain_id=from_chain_id, to_chain_id=to_chain_id, amount=amount, flow=flow, restart_from=restart_from, usdc_agent_balance_before_rebalance=usdc_agent_balance_before_rebalance)
