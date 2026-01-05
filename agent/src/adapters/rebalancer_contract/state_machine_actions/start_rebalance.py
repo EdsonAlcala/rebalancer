@@ -4,13 +4,14 @@ from engine_types import Flow
 from ..common import _RebalancerBase, TGAS
 
 class StartRebalance(_RebalancerBase):
-     async def start_rebalance(self, flow: Flow, source_chain: int, destination_chain: int, expected_amount: int) -> int:        
-        print(f"🚀 Starting rebalance... FLOW={flow.name}, source_chain={source_chain}, destination_chain={destination_chain}, expected_amount={expected_amount}")
+     async def start_rebalance(self, flow: Flow, source_chain: int, destination_chain: int, expected_amount: int, usdc_agent_balance_before: int) -> int:        
+        print(f"🚀 Starting rebalance... FLOW={flow.name}, source_chain={source_chain}, destination_chain={destination_chain}, expected_amount={expected_amount}, usdc_agent_balance_before={usdc_agent_balance_before}")
         args = {
             "flow": flow.name,
             "source_chain": source_chain,
             "destination_chain": destination_chain,
             "amount": expected_amount,
+            "usdc_agent_balance_before": usdc_agent_balance_before
         }
 
         result = await self._sign_and_submit_transaction(

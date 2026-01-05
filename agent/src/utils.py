@@ -219,6 +219,7 @@ def parse_activity_log(response: Any) -> Dict:
         timestamp: int,
         nonce: int,
         amount: "u128-as-string",
+        usdc_agent_balance_before: "u128-as-string",
         transactions: List[List[int]]
       }
     """
@@ -240,6 +241,7 @@ def parse_activity_log(response: Any) -> Dict:
         "destination_chain": int(parsed["destination_chain"]),
         "timestamp": int(parsed["timestamp"]),
         "nonce": int(parsed["nonce"]),
+        "usdc_agent_balance_before": int(parsed["usdc_agent_balance_before"]),  # u128 string → int
         "amount": int(parsed["amount"]),  # u128 string → int
         "transactions": [
             bytes(tx) for tx in parsed.get("transactions", [])
