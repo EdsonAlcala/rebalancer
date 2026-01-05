@@ -17,7 +17,8 @@ class SupplyAave(Step):
         on_behalf = ctx.agent_address
         referral = ctx.remote_config[ctx.to_chain_id]["aave"]["referral_code"]
 
-        supply_payload = await ctx.rebalancer_contract.get_signed_payload(self.PAYLOAD_TYPE)
+        if ctx.is_restart:
+            supply_payload = await ctx.rebalancer_contract.get_signed_payload(self.PAYLOAD_TYPE)
 
         if supply_payload:
             print("Found existing signed payload for AaveSupply.")

@@ -15,7 +15,9 @@ class WithdrawFromAave(Step):
         asset = ctx.usdc_token_address_on_source_chain
         on_behalf = ctx.agent_address
 
-        payload = await ctx.rebalancer_contract.get_signed_payload(self.PAYLOAD_TYPE)
+        if ctx.is_restart:
+            payload = await ctx.rebalancer_contract.get_signed_payload(self.PAYLOAD_TYPE)
+        
         if payload:
             print("Found existing signed payload for AaveWithdraw.")
             signed_rlp = payload

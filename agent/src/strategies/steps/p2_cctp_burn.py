@@ -14,7 +14,8 @@ class CctpBurn(Step):
     async def run(self, ctx: StrategyContext):
         burn_token = ctx.usdc_token_address_on_source_chain
 
-        payload = await ctx.rebalancer_contract.get_signed_payload(self.PAYLOAD_TYPE)
+        if ctx.is_restart:
+            payload = await ctx.rebalancer_contract.get_signed_payload(self.PAYLOAD_TYPE)
 
         if payload:
             print("Found existing signed payload for CctpBurn.")

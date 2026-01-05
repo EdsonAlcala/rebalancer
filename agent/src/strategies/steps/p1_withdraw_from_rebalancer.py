@@ -13,7 +13,8 @@ class WithdrawFromRebalancer(Step):
 
     async def run(self, ctx: StrategyContext) -> None:
         print(f"payload type: {self.PAYLOAD_TYPE.value}")
-        payload = await ctx.rebalancer_contract.get_signed_payload(self.PAYLOAD_TYPE)
+        if ctx.is_restart:
+            payload = await ctx.rebalancer_contract.get_signed_payload(self.PAYLOAD_TYPE)
 
         if payload:
             print("Found existing signed payload for rebalancer withdraw.")
