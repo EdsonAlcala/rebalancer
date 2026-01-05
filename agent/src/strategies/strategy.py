@@ -26,11 +26,12 @@ class Strategy:
             from_chain_id=from_chain_id,
             to_chain_id=to_chain_id,
             amount=amount,
-            flow=flow
+            flow=flow,
+            restart_from=restart_from
         )
         await self._run_phases(ctx, restart_from)
 
-    def _make_context(self, *, from_chain_id: int, to_chain_id: int, flow: Flow, amount: int) -> StrategyContext:
+    def _make_context(self, *, from_chain_id: int, to_chain_id: int, flow: Flow, amount: int, restart_from: Optional[str] = None) -> StrategyContext:
         print(f"🟩 Flow {self.NAME} | from={from_chain_id} to={to_chain_id} amount={amount}")
         return StrategyContext(
             from_chain_id=from_chain_id,
@@ -43,7 +44,9 @@ class Strategy:
             evm_factory_provider=self.evm_factory_provider,
             rebalancer_contract=self.rebalancer_contract,
             flow=flow,
-            max_allowance=self.max_allowance
+            max_allowance=self.max_allowance,
+            restart_from=restart_from,
+            is_restart=restart_from is not None
         )
 
     async def _run_phases(self, ctx: StrategyContext, restart_from: Optional[str] = None):
@@ -51,11 +54,11 @@ class Strategy:
 
         if restart_from:
             for i, step_cls in enumerate(self.STEPS):
-                if step_cls.NAME == restart_from:
+                if step_cls.CAN_BE_RESTARTED and step_cls.PAYLOAD_TYPE == restart_from:
                     start_index = i
                     break
 
         for step_cls in self.STEPS[start_index:]:
             step = step_cls()
-            print(f"➡️ Phase: {step.NAME}")
+            print(f"🌈 Phase: {step.NAME}")
             await retry_async_step(lambda: step.run(ctx))

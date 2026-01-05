@@ -21,7 +21,9 @@ class StrategyContext:
         evm_factory_provider: AlchemyFactoryProvider,
         rebalancer_contract: RebalancerContract,
         flow: Flow,
-        max_allowance: int
+        max_allowance: int,
+        is_restart: bool = False,
+        restart_from: Optional[str] = None
     ):
         self.from_chain_id = from_chain_id
         self.to_chain_id = to_chain_id
@@ -50,6 +52,9 @@ class StrategyContext:
         self.aave_lending_pool_address_on_destination_chain: str = self.remote_config[to_chain_id]["aave"]["lending_pool_address"]
         self.aave_lending_pool_address_on_source_chain: str = self.remote_config[from_chain_id]["aave"]["lending_pool_address"]
 
+        self.is_restart = is_restart
+        self.restart_from = restart_from
+        
         # ===== filled by phases =====
         self.nonce: Optional[int] = None
         self.usdc_agent_balance_before_rebalance: Optional[int] = None
