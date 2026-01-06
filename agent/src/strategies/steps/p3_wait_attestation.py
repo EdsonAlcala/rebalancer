@@ -3,6 +3,7 @@ from near_omni_client.adapters.cctp.attestation_service import AttestationServic
 from ..strategy_context import StrategyContext
 from .step import Step
 from .step_names import StepName
+from .constants import POLL_INTERVAL_SECONDS
 
 class WaitAttestation(Step):
     NAME = StepName.WaitAttestation
@@ -18,4 +19,4 @@ class WaitAttestation(Step):
         
         ctx.attestation = attestation
 
-        time.sleep(2)
+        time.sleep(POLL_INTERVAL_SECONDS)

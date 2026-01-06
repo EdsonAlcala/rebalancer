@@ -4,6 +4,7 @@ from engine_types import TxType
 from ..strategy_context import StrategyContext
 from .step import Step
 from .step_names import StepName
+from .constants import POLL_INTERVAL_SECONDS
 
 class CctpMint(Step):
     NAME = StepName.CctpMint
@@ -43,4 +44,4 @@ class CctpMint(Step):
 
         print("Mint transaction broadcasted successfully!")
 
-        time.sleep(3)
+        time.sleep(POLL_INTERVAL_SECONDS)

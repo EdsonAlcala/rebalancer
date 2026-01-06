@@ -5,6 +5,7 @@ from engine_types import TxType
 from ..strategy_context import StrategyContext
 from .step import Step
 from .step_names import StepName
+from .constants import POLL_INTERVAL_SECONDS
 
 class SupplyAave(Step):
     NAME = StepName.SupplyAave
@@ -50,4 +51,4 @@ class SupplyAave(Step):
 
         print("Aave supply transaction broadcasted successfully.")
 
-        time.sleep(2)
+        time.sleep(POLL_INTERVAL_SECONDS)  # Wait for a short period to ensure the transaction is processed
