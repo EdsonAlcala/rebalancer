@@ -64,4 +64,4 @@ RUN useradd --create-home --shell /bin/bash app \
  && chown -R app:app /app
 USER app
 
-CMD ["uv", "run", "src/main.py"]
+CMD ["python", "src/main.py"]
