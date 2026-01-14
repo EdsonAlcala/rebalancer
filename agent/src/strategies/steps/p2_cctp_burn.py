@@ -50,6 +50,6 @@ class CctpBurn(Step):
 
         tx_hash = broadcast(ctx.web3_source, payload)
 
-        print(f"✅ CctpBurn transaction broadcasted successfully!")
+        print("✅ CctpBurn transaction broadcasted successfully!")
 
         ctx.burn_tx_hash = f"0x{tx_hash}"

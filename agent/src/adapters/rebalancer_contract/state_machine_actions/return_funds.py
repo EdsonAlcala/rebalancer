@@ -7,7 +7,7 @@ from ..common import _RebalancerBase, TGAS
 
 class ReturnFunds(_RebalancerBase):
     async def build_return_funds_tx(self, amount: int, cross_chain_a_token_balance: int):
-        print(f"Building return_funds tx")
+        print("Building return_funds tx")
         args = {
             "amount": amount,
             "cross_chain_a_token_balance": cross_chain_a_token_balance

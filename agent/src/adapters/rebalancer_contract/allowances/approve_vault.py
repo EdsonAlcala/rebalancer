@@ -35,7 +35,7 @@ class ApproveVault(_RebalancerBase):
 
 
     async def build_approve_vault_to_manage_agents_usdc_tx(self, spender: str):
-        print(f"Building approve_vault_to_manage_agents_usdc tx")
+        print("Building approve_vault_to_manage_agents_usdc tx")
 
         args = {
             "spender": spender,

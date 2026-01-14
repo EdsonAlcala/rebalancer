@@ -8,7 +8,7 @@ from ..common import _RebalancerBase, TGAS
 
 class AaveWithdraw(_RebalancerBase):
     async def build_aave_withdraw_tx(self, asset: str, amount: int, on_behalf_of: str):
-            print(f"Building aave_withdraw tx")
+            print("Building aave_withdraw tx")
             args = {
                 "asset": asset,
                 "amount": amount,

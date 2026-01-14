@@ -7,7 +7,7 @@ from ..common import _RebalancerBase, TGAS
 
 class ApproveMessengerCctp(_RebalancerBase):
     async def build_cctp_approve_burn_tx(self, amount: int, spender: str):
-        print(f"Building build_cctp_approve_burn tx")
+        print("Building build_cctp_approve_burn tx")
         args = {
             "amount": amount,
             "spender": spender,

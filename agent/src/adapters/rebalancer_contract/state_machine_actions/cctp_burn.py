@@ -8,7 +8,7 @@ from ..common import _RebalancerBase, TGAS
 
 class CctpBurn(_RebalancerBase):
     async def build_cctp_burn_tx(self, destination_domain: int, amount: int, max_fee: int, burn_token: str):
-        print(f"Building cctp_burn tx")        
+        print("Building cctp_burn tx")        
         args = {
             "amount": amount,
             "destination_domain": destination_domain,

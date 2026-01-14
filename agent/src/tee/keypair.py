@@ -19,7 +19,7 @@ class KeyPairGenerator:
         if self.account_id and self.signing_key:
             raise ValueError("An account is already configured. Cannot generate ephemeral account")
         
-        print(f"🔐 Generating ephemeral account with TEE")
+        print("🔐 Generating ephemeral account with TEE")
         
         random_array = secrets.token_bytes(32) 
         random_string = random_array.hex()

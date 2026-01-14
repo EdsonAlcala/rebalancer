@@ -1,4 +1,3 @@
-from typing import Any, Dict
 import base64
 import asyncio
 
@@ -7,6 +6,8 @@ from near_omni_client.wallets.near_wallet import NearWallet
 from near_omni_client.transactions import TransactionBuilder, ActionFactory
 from near_omni_client.transactions.utils import decode_key
 from near_omni_client.json_rpc.exceptions import JsonRpcError
+
+FUNDING_DELAY = 60 # seconds
 
 class FundManager:
     def __init__(self, near_wallet: NearWallet, near_client: NearClient):
@@ -35,11 +36,10 @@ class FundManager:
         await self._sign_and_submit_transaction(
             receiver_id=destination_account_id,
             amount=int(required_balance_in_near * 10**24),
-            gas=300_000_000_000_000,
-            deposit=0,
+            max_retries=10
         )
     
-    async def _sign_and_submit_transaction(self, *, receiver_id: str, amount: int, gas: int, deposit: int, max_retries: int = 3, delay: float = 2.0):
+    async def _sign_and_submit_transaction(self, *, receiver_id: str, amount: int, max_retries: int = 3, delay: float = 2.0):
       public_key_str = await self.near_wallet.get_public_key()
       signer_account_id = self.near_wallet.get_address()
       private_key_str = self.near_wallet.keypair.to_string()
@@ -71,7 +71,8 @@ class FundManager:
                print("✅ Transaction successfully sent.")
                return result
             except JsonRpcError as e:
-               if "TIMEOUT_ERROR" in str(e):
+                msg = str(e)
+                if "TIMEOUT_ERROR" in msg:
                   if attempt < max_retries:
                         print(f"⚠️  Timeout error on attempt {attempt}. Retrying in {delay:.1f}s...")
                         await asyncio.sleep(delay)
@@ -79,16 +80,26 @@ class FundManager:
                         continue
                   else:
                         print("❌ Transaction failed after maximum retries due to TIMEOUT_ERROR.")
-               raise
+
+                if "LackBalanceForState" in msg:
+                    print("⚠️  Not enough balance for storage/state.")
+                    print("👉 Please fund the signer account and press Ctrl+C to abort.")
+                    print(f"⏳ Waiting {FUNDING_DELAY:.0f}s before retrying...")
+
+                    await asyncio.sleep(FUNDING_DELAY)
+                    delay *= 2  # exponential backoff
+                    continue
+                
+                raise
             except Exception as e:
                # Catch unexpected errors (network, aiohttp, etc.)
-               if attempt < max_retries:
+                if attempt < max_retries:
                   print(f"⚠️  Unexpected error on attempt {attempt}: {e}. Retrying in {delay:.1f}s...")
                   await asyncio.sleep(delay)
                   delay *= 2
                   continue
-               else:
-                  print("❌ Transaction failed after maximum retries due to unexpected error.")
-                  raise
+                else:
+                    print("❌ Transaction failed after maximum retries due to unexpected error.")
+                    raise
       # --- Retry section ends here ---
       

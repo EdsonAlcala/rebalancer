@@ -8,7 +8,7 @@ from ..common import _RebalancerBase, TGAS
 
 class CctpMint(_RebalancerBase):    
     async def build_cctp_mint_tx(self, message: str, attestation: str):
-        print(f"Building cctp_mint tx")
+        print("Building cctp_mint tx")
         args = {
             "message": hex_to_int_list(message),
             "attestation": hex_to_int_list(attestation)
@@ -27,7 +27,7 @@ class CctpMint(_RebalancerBase):
         return payload_bytes
     
     async def build_and_sign_cctp_mint_tx(self, to_chain_id: int, message: str, attestation: str, to: str): 
-        print(f"Building and signing cctp_mint tx")
+        print("Building and signing cctp_mint tx")
         print(f"chain id: {to_chain_id}")
         destination_chain_as_network = from_chain_id_to_network(to_chain_id)
         input_payload = await self.build_cctp_mint_tx(message, attestation)

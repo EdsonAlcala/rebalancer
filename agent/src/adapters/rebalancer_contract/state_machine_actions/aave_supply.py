@@ -8,7 +8,7 @@ from ..common import _RebalancerBase, TGAS
 
 class AaveSupply(_RebalancerBase):
     async def build_aave_supply_tx(self, asset: str, amount: int, on_behalf_of: str, referral_code: int):
-        print(f"Building aave_deposit tx")
+        print("Building aave_deposit tx")
         args = {
             "asset": asset,
             "amount": amount,

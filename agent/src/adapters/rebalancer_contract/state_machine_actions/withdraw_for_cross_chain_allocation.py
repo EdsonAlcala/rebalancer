@@ -9,7 +9,7 @@ from ..common import _RebalancerBase, TGAS
 
 class WithdrawForCrossChainAllocation(_RebalancerBase):
     async def build_withdraw_for_crosschain_allocation_tx(self, amount: int, cross_chain_a_token_balance: Any = None):
-        print(f"Building withdraw_for_crosschain_allocation tx")
+        print("Building withdraw_for_crosschain_allocation tx")
         args = {
             "amount": amount,
             "cross_chain_a_token_balance": cross_chain_a_token_balance

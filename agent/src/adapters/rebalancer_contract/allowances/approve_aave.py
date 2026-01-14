@@ -7,7 +7,7 @@ from ..common import _RebalancerBase, TGAS
 
 class ApproveAave(_RebalancerBase):
     async def build_aave_approve_supply_tx(self, amount: int, spender: str):
-            print(f"Building build_aave_approve_supply_tx")
+            print("Building build_aave_approve_supply_tx")
             args = {
                 "amount": amount,
                 "spender": spender,
