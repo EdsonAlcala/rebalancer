@@ -1,6 +1,8 @@
 from eth_typing import ChecksumAddress
 from web3 import Web3
 
+from near_omni_client.providers.evm import AlchemyFactoryProvider
+
 from adapters import LendingPool
 from utils import from_chain_id_to_network
 
@@ -20,6 +22,7 @@ class CrossChainATokenBalanceHelper:
 
     _agent: ChecksumAddress
     _source_chain_id: int
+    _evm_factory_provider: AlchemyFactoryProvider
 
     # chain_id -> aToken address (ONLY non-source chains)
     _a_token_by_chain: dict[int, ChecksumAddress] = {}
@@ -32,11 +35,12 @@ class CrossChainATokenBalanceHelper:
         source_chain_id: int,
         supported_chains: list[int],
         remote_configs: dict[int, dict],
-        evm_factory_provider: any,
+        evm_factory_provider: AlchemyFactoryProvider,
     ) -> None:
         cls._agent = Web3.to_checksum_address(agent_address)
         cls._source_chain_id = source_chain_id
         cls._a_token_by_chain = {}
+        cls._evm_factory_provider = evm_factory_provider
 
         for chain_id in supported_chains:
             if chain_id == source_chain_id:
@@ -65,10 +69,6 @@ class CrossChainATokenBalanceHelper:
         if not cls._configured:
             raise RuntimeError("CrossChainATokenBalanceHelper not configured")
 
-    #
-    # Public API
-    #
-
     @classmethod
     def get_total_cross_chain_balance(cls) -> int:
         """
@@ -80,7 +80,7 @@ class CrossChainATokenBalanceHelper:
 
         for chain_id, a_token in cls._a_token_by_chain.items():
             network_id = from_chain_id_to_network(chain_id)
-            web3 = cls._context.evm_factory_provider.get_provider(network_id)
+            web3 = cls._evm_factory_provider.get_provider(network_id)
 
             balance = (
                 web3.eth.contract(address=a_token, abi=ATOKEN_ABI)
