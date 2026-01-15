@@ -1,7 +1,7 @@
 import asyncio
 
 from config import Config
-from helpers import Assert, BalanceHelper
+from helpers import Assert, BalanceHelper,CrossChainATokenBalanceHelper
 from optimizer import get_extra_data_for_optimization, optimize_chain_allocation_with_direction
 from engine import build_context, StrategyManager, execute_all_rebalance_operations,compute_rebalance_operations, get_allocations
 from adapters import Vault
@@ -21,6 +21,15 @@ async def main():
     max_allowance = Vault(context.vault_address, context.source_network, context.evm_factory_provider).get_max_total_deposits()
     print(f"Max allowance for vault {vault_address} on source chain: {max_allowance}")
    
+   # Configure Crosschain BalanceHelper 
+    CrossChainATokenBalanceHelper.configure(
+        agent_address=agent_evm_address,
+        source_chain_id=context.source_chain_id,
+        supported_chains=context.supported_chains,
+        remote_configs=context.remote_configs,
+        evm_factory_provider=context.evm_factory_provider,
+    )
+
     # Configure Balance Helper
     BalanceHelper.configure(rebalancer_vault_address=vault_address, agent_address=agent_evm_address)
 
