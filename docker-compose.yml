@@ -20,4 +20,4 @@ services:
       - MASTER_FUNDER_ACCOUNT_ID="rebalancer-11.testnet"
       - MASTER_FUNDER_DRIP_SIZE=0.3
       - MASTER_FUNDER_PRIVATE_KEY=${MASTER_FUNDER_PRIVATE_KEY}
-      - DSTACK_SIMULATOR_ENDPOINT=/tmp/tappd.sock
+      - DSTACK_SIMULATOR_ENDPOINT=/var/run/dstack.sock
