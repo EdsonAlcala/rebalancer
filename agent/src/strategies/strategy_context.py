@@ -24,10 +24,10 @@ class StrategyContext:
         max_allowance: int,
         is_restart: bool = False,
         restart_from: Optional[str] = None,
-        usdc_agent_balance_before_rebalance_in_source_chain: Optional[int] = None,
-        usdc_agent_balance_before_rebalance_in_dest_chain: Optional[int] = None,
-        a_usdc_agent_balance_before_rebalance_in_source_chain: Optional[int] = None,
-        a_usdc_agent_balance_before_rebalance_in_dest_chain: Optional[int] = None
+        usdc_agent_balance_before_in_source_chain: Optional[int] = None,
+        usdc_agent_balance_before_in_dest_chain: Optional[int] = None,
+        a_usdc_agent_balance_before_in_source_chain: Optional[int] = None,
+        a_usdc_agent_balance_before_in_dest_chain: Optional[int] = None
     ):
         self.from_chain_id = from_chain_id
         self.to_chain_id = to_chain_id
@@ -62,11 +62,11 @@ class StrategyContext:
         # ===== filled by phases =====
         self.nonce: Optional[int] = None
         
-        self.usdc_agent_balance_before_rebalance_in_source_chain: Optional[int] = usdc_agent_balance_before_rebalance_in_source_chain # can be set during restart
-        self.usdc_agent_balance_before_rebalance_in_dest_chain: Optional[int] = usdc_agent_balance_before_rebalance_in_dest_chain # can be set during restart
+        self.usdc_agent_balance_before_in_source_chain: Optional[int] = usdc_agent_balance_before_in_source_chain # can be set during restart
+        self.usdc_agent_balance_before_in_dest_chain: Optional[int] = usdc_agent_balance_before_in_dest_chain # can be set during restart
         
-        self.a_usdc_agent_balance_before_rebalance_in_source_chain: Optional[int] = a_usdc_agent_balance_before_rebalance_in_source_chain # can be set during restart
-        self.a_usdc_agent_balance_before_rebalance_in_dest_chain: Optional[int] = a_usdc_agent_balance_before_rebalance_in_dest_chain # can be set during restart
+        self.a_usdc_agent_balance_before_in_source_chain: Optional[int] = a_usdc_agent_balance_before_in_source_chain # can be set during restart
+        self.a_usdc_agent_balance_before_in_dest_chain: Optional[int] = a_usdc_agent_balance_before_in_dest_chain # can be set during restart
         
         self.a_token_address_on_destination_chain: Optional[str] = None
         self.a_token_address_on_source_chain: Optional[str] = None

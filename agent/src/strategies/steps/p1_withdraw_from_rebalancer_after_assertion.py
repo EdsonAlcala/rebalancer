@@ -8,6 +8,6 @@ class WithdrawFromRebalancerAfterAssertion(Step):
     NAME = StepName.WithdrawFromRebalancerAfterAssertion
 
     async def run(self, ctx: StrategyContext) -> None:
-        Assert.usdc_agent_balance(ctx.web3_source, ctx.usdc_token_address_on_source_chain, expected_balance=ctx.amount + ctx.usdc_agent_balance_before_rebalance)
+        Assert.usdc_agent_balance(ctx.web3_source, ctx.usdc_token_address_on_source_chain, expected_balance=ctx.amount + ctx.usdc_agent_balance_before_in_source_chain)
 
         print("✅ Assertion after withdraw from rebalancer passed.")

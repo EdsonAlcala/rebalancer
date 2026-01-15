@@ -14,10 +14,10 @@ class GetAUSDCBalanceBeforeRebalance(Step):
         if ctx.is_restart:
             print("⚠️ Restart detected; skipping fetching AUSDC balance before rebalance.")
 
-            if ctx.a_usdc_agent_balance_before_rebalance_in_source_chain is None:
+            if ctx.a_usdc_agent_balance_before_in_source_chain is None:
                 raise ValueError("AUSDC agent balance before rebalance in source chain must be set in context when restarting.")
             
-            if ctx.a_usdc_agent_balance_before_rebalance_in_dest_chain is None:
+            if ctx.a_usdc_agent_balance_before_in_dest_chain is None:
                 raise ValueError("AUSDC agent balance before rebalance in dest chain must be set in context when restarting.")
             
             return
@@ -32,13 +32,13 @@ class GetAUSDCBalanceBeforeRebalance(Step):
         if not ctx.a_token_address_on_source_chain:
             raise ValueError("Failed to get AToken address on source chain.")
       
-        ctx.a_usdc_agent_balance_before_rebalance_in_source_chain = BalanceHelper.get_atoken_agent_balance(ctx.web3_source, ctx.a_token_address_on_source_chain)
+        ctx.a_usdc_agent_balance_before_in_source_chain = BalanceHelper.get_atoken_agent_balance(ctx.web3_source, ctx.a_token_address_on_source_chain)
 
-        if not ctx.a_usdc_agent_balance_before_rebalance_in_source_chain:
+        if not ctx.a_usdc_agent_balance_before_in_source_chain:
             raise ValueError("AUSDC agent balance before rebalance is not set in context.")
         
-        ctx.a_usdc_agent_balance_before_rebalance_in_dest_chain = BalanceHelper.get_atoken_agent_balance(ctx.web3_destination, ctx.a_token_address_on_destination_chain)
+        ctx.a_usdc_agent_balance_before_in_dest_chain = BalanceHelper.get_atoken_agent_balance(ctx.web3_destination, ctx.a_token_address_on_destination_chain)
 
-        if not ctx.a_usdc_agent_balance_before_rebalance_in_dest_chain:
+        if not ctx.a_usdc_agent_balance_before_in_dest_chain:
             raise ValueError("AUSDC agent balance before rebalance is not set in context.")
         
