@@ -6,6 +6,7 @@ class StepName(Enum):
     ApproveBeforeCctpBurnIfRequired = "ApproveBeforeCctpBurnIfRequired"
     ApproveVaultToSpendAgentUSDCIfRequired = "ApproveVaultToSpendAgentUSDCIfRequired"
     GetUSDCBalanceBeforeRebalance = "GetUSDCBalanceBeforeRebalance"
+    GetAUSDCBalanceBeforeRebalance = "GetAUSDCBalanceBeforeRebalance"
     StartRebalance = "StartRebalance"
     WithdrawFromRebalancerAfterAssertion = "WithdrawFromRebalancerAfterAssertion"
     WithdrawFromRebalancer = "WithdrawFromRebalancer"

@@ -13,13 +13,21 @@ class GetUSDCBalanceBeforeRebalance(Step):
         if ctx.is_restart:
             print("⚠️ Restart detected; skipping fetching USDC balance before rebalance.")
 
-            if ctx.usdc_agent_balance_before_rebalance is None:
-                raise ValueError("USDC agent balance before rebalance must be set in context when restarting.")
+            if ctx.usdc_agent_balance_before_rebalance_in_source_chain is None:
+                raise ValueError("USDC agent balance before rebalance in source chain must be set in context when restarting.")
+            
+            if ctx.usdc_agent_balance_before_rebalance_in_dest_chain is None:
+                raise ValueError("USDC agent balance before rebalance in dest chain must be set in context when restarting.")
             
             return
         
-        ctx.usdc_agent_balance_before_rebalance = BalanceHelper.get_usdc_agent_balance(ctx.web3_source, ctx.usdc_token_address_on_source_chain)
-
-        if not ctx.usdc_agent_balance_before_rebalance:
-            raise ValueError("USDC agent balance before rebalance is not set in context.")
+        ctx.usdc_agent_balance_before_rebalance_in_source_chain = BalanceHelper.get_usdc_agent_balance(ctx.web3_source, ctx.usdc_token_address_on_source_chain)
+        
+        if not ctx.usdc_agent_balance_before_rebalance_in_source_chain:
+            raise ValueError("USDC agent balance before rebalance in source chain is not set in context.")
+        
+        ctx.usdc_agent_balance_before_rebalance_in_dest_chain = BalanceHelper.get_usdc_agent_balance(ctx.web3_destination, ctx.usdc_token_address_on_destination_chain)
+        
+        if not ctx.usdc_agent_balance_before_rebalance_in_dest_chain:
+            raise ValueError("USDC agent balance before rebalance in dest chain is not set in context.")
         

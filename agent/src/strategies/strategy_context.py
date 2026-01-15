@@ -68,11 +68,13 @@ class StrategyContext:
         self.a_usdc_agent_balance_before_rebalance_in_source_chain: Optional[int] = a_usdc_agent_balance_before_rebalance_in_source_chain # can be set during restart
         self.a_usdc_agent_balance_before_rebalance_in_dest_chain: Optional[int] = a_usdc_agent_balance_before_rebalance_in_dest_chain # can be set during restart
         
+        self.a_token_address_on_destination_chain: Optional[str] = None
+        self.a_token_address_on_source_chain: Optional[str] = None
+
         self.cctp_fees: Optional[int] = None
         self.burn_tx_hash: Optional[str] = None
         self.attestation: Optional[Message] = None
+        
+        self.a_token_balance_before_supply: Optional[int] = None # TODO: Remove duplicated variable
 
-        self.a_token_address_on_destination_chain: Optional[str] = None
-        self.a_token_balance_before_supply: Optional[int] = None
-
-        self.usdc_agent_balance_before_deposit_to_rebalancer: Optional[int] = None
+        self.usdc_agent_balance_before_deposit_to_rebalancer: Optional[int] = None # TODO: Remove duplicated variable

@@ -3,6 +3,7 @@ from .steps.p0_start_rebalance import StartRebalance
 from .steps.p1_withdraw_from_rebalancer import WithdrawFromRebalancer
 from .steps.p1_withdraw_from_rebalancer_after_assertion import WithdrawFromRebalancerAfterAssertion
 from .steps.p0_get_usdc_agent_balance_before_rebalance import GetUSDCBalanceBeforeRebalance
+from .steps.p0_get_a_usdc_agent_balance_before_rebalance import GetAUSDCBalanceBeforeRebalance
 from .steps.p2_compute_cctp_fees import ComputeCctpFees
 from .steps.p0_approve_before_cctp_burn import ApproveBeforeCctpBurnIfRequired
 from .steps.p0_approve_aave_before_supply import ApproveAaveUSDCBeforeSupplyIfRequired
@@ -23,6 +24,7 @@ class RebalancerToAave(Strategy):
         ApproveBeforeCctpBurnIfRequired, # @dev we execute the allowances check before all
         ApproveAaveUSDCBeforeSupplyIfRequired, # @dev we execute the allowances check before all
         GetUSDCBalanceBeforeRebalance,
+        GetAUSDCBalanceBeforeRebalance,
     ]
     STEPS = [
         StartRebalance,
