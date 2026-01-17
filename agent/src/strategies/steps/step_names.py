@@ -23,4 +23,3 @@ class StepName(Enum):
     WithdrawFromAave = "WithdrawFromAave"
     DepositIntoRebalancerAfterAssertion = "DepositIntoRebalancerAfterAssertion"
     DepositIntoRebalancer = "DepositIntoRebalancer"
-    GetUSDCBalanceBeforeDepositToRebalancer = "GetUSDCBalanceBeforeDepositToRebalancer"

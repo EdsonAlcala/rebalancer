@@ -74,5 +74,3 @@ class StrategyContext:
         self.cctp_fees: Optional[int] = None
         self.burn_tx_hash: Optional[str] = None
         self.attestation: Optional[Message] = None
-        
-        self.usdc_agent_balance_before_deposit_to_rebalancer: Optional[int] = None # TODO: Remove duplicated variable
