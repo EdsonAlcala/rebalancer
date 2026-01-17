@@ -1,3 +1,4 @@
+from engine_types.tx_type import TxType
 from helpers import broadcast, CrossChainATokenBalanceHelper
 
 from ..strategy_context import StrategyContext
@@ -7,6 +8,10 @@ from .step_names import StepName
 class DepositIntoRebalancer(Step):
     NAME = StepName.DepositIntoRebalancer
 
+    PAYLOAD_TYPE: TxType = TxType.RebalancerDeposit
+    
+    CAN_BE_RESTARTED = True
+    
     async def run(self, ctx: StrategyContext):
         print("Depositing into rebalancer...")
         crosschain_balance = CrossChainATokenBalanceHelper.get_total_cross_chain_balance()
