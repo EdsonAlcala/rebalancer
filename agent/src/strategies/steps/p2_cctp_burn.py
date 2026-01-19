@@ -30,6 +30,7 @@ class CctpBurn(Step):
                 # Check if the transaction is already mined
                 try:
                     ctx.web3_source.eth.get_transaction(tx_hash)
+                    ctx.burn_tx_hash = f"0x{tx_hash.hex()}"
                     return
                 except Exception:
                     # If not found, broadcast the signed payload
