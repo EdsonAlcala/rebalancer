@@ -15,7 +15,7 @@ class ComputeCctpFees(Step):
         cctp_fees_typed = fee_service.get_fees(destination_domain_id=domain)
         cctp_minimum_fee = cctp_fees_typed.minimumFee
 
-        print(f"CCTP minimum fee for destination domain {domain}: {cctp_minimum_fee}")
+        print(f"CCTP minimum fee for destination domain {domain}: {cctp_minimum_fee} and amount to bridge: {ctx.amount}")
 
         raw_fees = int((cctp_minimum_fee * ctx.amount // 10_000) * BUFFER)
         print(f"CCTP fees for amount {ctx.amount}: {raw_fees}")
