@@ -49,15 +49,23 @@ async def build_context(config: Config) -> EngineContext:
     # Agent KDF → EVM address
     # ---------------------------
     print(f"showing config.network_short_name: {config.network_short_name}")
+    
     root_pubkey = Kdf.get_root_public_key(config.network_short_name)
+    print(f"Derived root public key: {root_pubkey}")
+    
     epsilon = Kdf.derive_epsilon(account_id=config.contract_id, path=config.kdf_path)
+    print(f"Derived epsilon: {epsilon}")
+    print(f"account_id: {config.contract_id} and kdf_path: {config.kdf_path}")
+
     agent_public_key = Kdf.derive_public_key(
         root_public_key_str=root_pubkey,
         epsilon=epsilon,
     )
+    print(f"Derived agent public key: {agent_public_key}")
 
     agent_address = get_evm_address(agent_public_key)
     print(f"Derived agent EVM address: {agent_address}")
+    
     # ---------------------------
     # Gas estimator
     # ---------------------------
@@ -66,6 +74,8 @@ async def build_context(config: Config) -> EngineContext:
     # ---------------------------
     # One-time NEAR signer
     # ---------------------------
+    print(f"is config use_static_signer? {config.use_static_signer}")
+    
     if config.use_static_signer:
         print("Using static one-time NEAR signer.")
         print(f"One-time signer account ID: {config.one_time_signer_account_id}")
