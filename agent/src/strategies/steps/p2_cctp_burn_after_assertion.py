@@ -7,6 +7,11 @@ class CctpBurnAfterAssertion(Step):
     NAME = StepName.CctpBurnAfterAssertion
 
     async def run(self, ctx: StrategyContext):
+        print(f"balance before CCTP burn: {ctx.usdc_agent_balance_before_in_source_chain}")
+        print(f"CCTP fees: {ctx.cctp_fees}")
+
+        print(f"balance computing both values: {ctx.usdc_agent_balance_before_in_source_chain - (ctx.cctp_fees or 0)}")
+        
         # Step 4: Assert balance is (balance before - fees)
         Assert.usdc_agent_balance(ctx.web3_source, ctx.usdc_token_address_on_source_chain, expected_balance=ctx.usdc_agent_balance_before_in_source_chain - (ctx.cctp_fees or 0))
 
