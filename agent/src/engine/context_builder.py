@@ -48,14 +48,16 @@ async def build_context(config: Config) -> EngineContext:
     # ---------------------------
     # Agent KDF → EVM address
     # ---------------------------
+    print(f"showing config.network_short_name: {config.network_short_name}")
     root_pubkey = Kdf.get_root_public_key(config.network_short_name)
     epsilon = Kdf.derive_epsilon(account_id=config.contract_id, path=config.kdf_path)
     agent_public_key = Kdf.derive_public_key(
         root_public_key_str=root_pubkey,
         epsilon=epsilon,
     )
-    agent_address = get_evm_address(agent_public_key)
 
+    agent_address = get_evm_address(agent_public_key)
+    print(f"Derived agent EVM address: {agent_address}")
     # ---------------------------
     # Gas estimator
     # ---------------------------
@@ -161,6 +163,8 @@ async def build_context(config: Config) -> EngineContext:
     if not vault_address:
         raise ValueError(f"Vault address for source chain {source_chain_id} not found in remote configs.")
 
+    print(f"agent address in context builder: {agent_address}")
+    
     # ---------------------------
     # Build context object
     # ---------------------------
