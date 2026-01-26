@@ -17,8 +17,9 @@ from utils import address_to_bytes32
 from .views import RebalancerContractViews
 from .allowances import RebalancerApprovals
 from .state_machine_actions import RebalancerStepMachineActions
+from .agent import RegisterWorker
 
-class RebalancerContract(RebalancerContractViews, RebalancerApprovals,RebalancerStepMachineActions):
+class RebalancerContract(RebalancerContractViews, RebalancerApprovals,RebalancerStepMachineActions, RegisterWorker):
    def __init__(self, near_client: NearClient, near_wallet: NearWallet, near_contract_id: str, agent_address: str, gas_estimator: GasEstimator, evm_provider: IProviderFactory, config: Config) -> None:
         self.near_client = near_client
         self.near_contract_id = near_contract_id
