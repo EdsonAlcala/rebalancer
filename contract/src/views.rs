@@ -46,6 +46,10 @@ impl Contract {
         self.worker_by_account_id.get(&account_id).cloned()
     }
 
+    pub fn is_worker_registered(&self, account_id: AccountId) -> bool {
+        self.worker_by_account_id.contains_key(&account_id)
+    }
+
     pub fn get_latest_logs(&self, count: u64) -> Vec<ActivityLog> {
         let mut logs = Vec::new();
         let current_nonce = self.logs_nonce;
