@@ -33,9 +33,7 @@ async def get_tee_info(account_id: str) -> Dict[str, Any]:
     try:
         # 1) TCB info (InfoResponse[TcbInfoV03x])
         info_resp = await tappd.info()
-        print(f"TCB Info response: {info_resp}")
 
-        # FIX: use parsed tcb_info model directly
         tcb_info = json.dumps(
             info_resp.tcb_info.model_dump(),
             ensure_ascii=False,
@@ -72,7 +70,6 @@ async def get_tee_info(account_id: str) -> Dict[str, Any]:
         if not isinstance(res_data, dict):
             raise ValueError(f"Unexpected proof response JSON: {res_data!r}")
 
-        print(f"Proof service response: {res_data}")
         checksum = res_data.get("checksum")
         quote_collateral = res_data.get("quote_collateral")
 
