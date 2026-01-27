@@ -36,6 +36,7 @@ class Config:
         master_funder_signer_private_key: str = None,
         master_funder_drip_size: float = None,
         master_funder_signer_account_id: str = None,
+        interval_seconds: int = 3600,
     ):
         self.contract_id = contract_id
         self.near_network = near_network
@@ -55,6 +56,7 @@ class Config:
         self.master_funder_signer_private_key = master_funder_signer_private_key
         self.master_funder_drip_size = master_funder_drip_size
         self.master_funder_signer_account_id = master_funder_signer_account_id
+        self.interval_seconds = interval_seconds
         self._validate()
 
     @classmethod
@@ -80,7 +82,8 @@ class Config:
         master_funder_signer_private_key = os.getenv("MASTER_FUNDER_PRIVATE_KEY")
         master_funder_signer_account_id = os.getenv("MASTER_FUNDER_ACCOUNT_ID")
         master_funder_drip_size = float(os.getenv("MASTER_FUNDER_DRIP_SIZE", "0.5"))  # amount of NEAR to top up the one-time signer with
-        
+        interval_seconds = int(os.getenv("RUN_INTERVAL_SECONDS", "3600"))  # Default to 1 hour
+
         if use_static_signer and one_time_signer_private_key is None:
             sys.exit("❌ USE_STATIC_SIGNER is true but ONE_TIME_SIGNER_PRIVATE_KEY is not set.")
 
@@ -117,6 +120,7 @@ class Config:
             master_funder_signer_private_key=master_funder_signer_private_key,
             master_funder_signer_account_id=master_funder_signer_account_id,
             master_funder_drip_size=master_funder_drip_size,
+            interval_seconds=interval_seconds,
         )
 
     def _validate(self):

@@ -1,18 +1,15 @@
 import asyncio
+import time
+import traceback
 
 from config import Config
 from helpers import Assert, BalanceHelper,CrossChainATokenBalanceHelper
 from optimizer import get_extra_data_for_optimization, optimize_chain_allocation_with_direction
-from engine import build_context, StrategyManager, execute_all_rebalance_operations,compute_rebalance_operations, get_allocations
+from engine import build_context, StrategyManager, execute_all_rebalance_operations,compute_rebalance_operations, get_allocations, EngineContext
 from adapters import Vault
 from tee import get_tee_info
 
-async def main():
-    # Load configuration from environment variables
-    config = Config.from_env()
-
-    # Build engine context
-    context = await build_context(config)
+async def run_once(context: EngineContext, config: Config):
     print("Remote configs for all chains:", context.remote_configs)
 
     config.summary()
@@ -137,6 +134,33 @@ async def main():
         rebalance_operations=rebalance_operations
     )
     print("✅ Rebalance operations computed successfully.")
+
+async def main():
+    # Load configuration from environment variables
+    config = Config.from_env()
+
+    # Build engine context
+    context = await build_context(config)
+
+    interval = config.interval_seconds
+    print(f"⏱ Rebalancer interval: {interval}s")
+
+    while True:
+        started_at = time.time()
+        try:
+            await run_once(context, config)
+        except Exception as e:
+            print("❌ run_once failed:", repr(e))
+            traceback.print_exc()
+            # In case of failure, wait a bit before retrying
+            print("Waiting 30s before retrying...")
+            await asyncio.sleep(30)
+
+        elapsed = time.time() - started_at
+        sleep_for = max(0, interval - elapsed)
+
+        print(f"🕒 Sleeping {sleep_for:.0f}s until next run")
+        await asyncio.sleep(sleep_for)
 
 
 if __name__ == "__main__":
