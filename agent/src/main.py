@@ -146,7 +146,6 @@ async def main():
     print(f"⏱ Rebalancer interval: {interval}s")
 
     while True:
-        started_at = time.time()
         try:
             await run_once(context, config)
         except Exception as e:
@@ -156,11 +155,8 @@ async def main():
             print("Waiting 30s before retrying...")
             await asyncio.sleep(30)
 
-        elapsed = time.time() - started_at
-        sleep_for = max(0, interval - elapsed)
-
-        print(f"🕒 Sleeping {sleep_for:.0f}s until next run")
-        await asyncio.sleep(sleep_for)
+        print(f"🕒 Sleeping {config.interval_seconds:.0f}s until next run")
+        await asyncio.sleep(config.interval_seconds)
 
 
 if __name__ == "__main__":
