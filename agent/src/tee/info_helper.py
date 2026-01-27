@@ -3,7 +3,7 @@ import traceback
 from typing import Any, Dict
 
 import httpx
-from dstack_sdk import AsyncTappdClient
+from dstack_sdk import AsyncDstackClient
 
 PROOF_UPLOAD_URL = "https://proof.t16z.com/api/upload"
 
@@ -28,7 +28,7 @@ async def get_tee_info(account_id: str) -> Dict[str, Any]:
     """
     print(f"✅ Fetching TEE info for account: {account_id}")
 
-    tappd = AsyncTappdClient()
+    tappd = AsyncDstackClient()
 
     try:
         # 1) TCB info (InfoResponse[TcbInfoV03x])
@@ -45,9 +45,8 @@ async def get_tee_info(account_id: str) -> Dict[str, Any]:
         print("✅ TCB Info retrieved successfully.")
 
         # 2) Quote
-        quote_response = await tappd.tdx_quote(
-            report_data=account_id,
-            hash_algorithm="raw",
+        quote_response = await tappd.get_quote(
+            report_data=account_id
         )
 
         quote_hex = getattr(quote_response, "quote", None)
